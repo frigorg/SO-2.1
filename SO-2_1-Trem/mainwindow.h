@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "trem.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +16,32 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void updateInterface(int,int,int);
+
+private slots:
+    void on_btncomecar_clicked();
+
+    void on_btnparar_clicked();
+
+    void on_controle1_sliderReleased();
+
+    void on_controle2_sliderReleased();
+
+    void on_controle3_sliderReleased();
+
+    void on_controle4_sliderReleased();
+
+    void on_controle5_sliderReleased();
+
 private:
     Ui::MainWindow *ui;
+
+    Trem *trem1;
+    Trem *trem2;
+    Trem *trem3;
+    Trem *trem4;
+    Trem *trem5;
+
 };
 #endif // MAINWINDOW_H

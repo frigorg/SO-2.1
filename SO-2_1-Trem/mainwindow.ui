@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
-    <height>900</height>
+    <width>1000</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="btncomecar">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -30,7 +30,7 @@
      <string>COMEÇAR</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="btnparar">
     <property name="geometry">
      <rect>
       <x>560</x>
@@ -604,8 +604,29 @@
       </disabled>
      </palette>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>5000</number>
+    </property>
+    <property name="singleStep">
+     <number>20</number>
+    </property>
+    <property name="pageStep">
+     <number>20</number>
+    </property>
+    <property name="value">
+     <number>4000</number>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
+    </property>
+    <property name="invertedControls">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QSlider" name="controle2">
@@ -1058,6 +1079,24 @@
        </colorrole>
       </disabled>
      </palette>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>5000</number>
+    </property>
+    <property name="singleStep">
+     <number>20</number>
+    </property>
+    <property name="pageStep">
+     <number>20</number>
+    </property>
+    <property name="value">
+     <number>4000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -1514,6 +1553,24 @@
       </disabled>
      </palette>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>5000</number>
+    </property>
+    <property name="singleStep">
+     <number>20</number>
+    </property>
+    <property name="pageStep">
+     <number>20</number>
+    </property>
+    <property name="value">
+     <number>4000</number>
+    </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
@@ -1968,6 +2025,24 @@
        </colorrole>
       </disabled>
      </palette>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>5000</number>
+    </property>
+    <property name="singleStep">
+     <number>20</number>
+    </property>
+    <property name="pageStep">
+     <number>20</number>
+    </property>
+    <property name="value">
+     <number>4000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -2424,8 +2499,26 @@
       </disabled>
      </palette>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
     <property name="styleSheet">
      <string notr="true"/>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>5000</number>
+    </property>
+    <property name="singleStep">
+     <number>20</number>
+    </property>
+    <property name="pageStep">
+     <number>20</number>
+    </property>
+    <property name="value">
+     <number>4000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
@@ -2434,10 +2527,10 @@
    <widget class="QFrame" name="trem1">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>160</y>
-      <width>40</width>
-      <height>40</height>
+      <x>78</x>
+      <y>78</y>
+      <width>50</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2450,13 +2543,13 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QFrame" name="trem1_3">
+   <widget class="QFrame" name="trem3">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>230</y>
-      <width>40</width>
-      <height>40</height>
+      <x>568</x>
+      <y>78</y>
+      <width>50</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2469,13 +2562,13 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QFrame" name="trem1_4">
+   <widget class="QFrame" name="trem4">
     <property name="geometry">
      <rect>
-      <x>210</x>
-      <y>490</y>
-      <width>40</width>
-      <height>40</height>
+      <x>202</x>
+      <y>322</y>
+      <width>50</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2488,13 +2581,13 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QFrame" name="trem1_5">
+   <widget class="QFrame" name="trem5">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>570</y>
-      <width>40</width>
-      <height>40</height>
+      <x>448</x>
+      <y>322</y>
+      <width>50</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2507,13 +2600,13 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QFrame" name="trem1_2">
+   <widget class="QFrame" name="trem2">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>80</y>
-      <width>40</width>
-      <height>40</height>
+      <x>323</x>
+      <y>78</y>
+      <width>50</width>
+      <height>50</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2532,7 +2625,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1100</width>
+     <width>1000</width>
      <height>22</height>
     </rect>
    </property>
