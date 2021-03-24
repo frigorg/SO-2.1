@@ -9,6 +9,8 @@ public:
     Trem(int,int,int);
     void run();
     void setVelocidade(int valor);
+    int getTamanhoTrem();
+    std::pair<int,int> getCoordenadas();
 
 signals:
     void updateGUI(int,int,int);
@@ -20,6 +22,7 @@ private:
    float velocidade;
    int const TAMANHO_QUADRADO = 245;
    int const VELOCIDADE_MINIMA = 5000;
+   int const TAMANHO_TREM = 50;
 
    void checarLimitesQuadrado(int qx, int qy, int tamanhoQuadrado);
 };

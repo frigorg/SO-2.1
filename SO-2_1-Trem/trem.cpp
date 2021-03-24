@@ -17,22 +17,30 @@ void Trem::setVelocidade(int valor){
    //this->velocidade = valor; //linear
 }
 
+int Trem::getTamanhoTrem() {
+    return this->TAMANHO_TREM;
+}
+
+std::pair<int,int> Trem::getCoordenadas(){
+    return std::pair<int,int>(this->x, this->y);
+}
+
 void Trem::run(){
     while(true){
         switch(ID){
-        case 1:     //Trem 1
+        case 0:     //Trem 0
             checarLimitesQuadrado(78, 78, TAMANHO_QUADRADO);
             break;
-        case 2:     //Trem 2
+        case 1:     //Trem 1
             checarLimitesQuadrado(323, 78, TAMANHO_QUADRADO);
             break;
-        case 3:     //Trem 3
+        case 2:     //Trem 2
             checarLimitesQuadrado(568, 78, TAMANHO_QUADRADO);
             break;
-        case 4:     //Trem 4
+        case 3:     //Trem 3
             checarLimitesQuadrado(202, 322, TAMANHO_QUADRADO);
             break;
-        case 5:     //Trem 5
+        case 4:     //Trem 4
             checarLimitesQuadrado(448, 322, TAMANHO_QUADRADO);
             break;
         default:
@@ -41,6 +49,7 @@ void Trem::run(){
     }
 }
 
+// Calcula o movimento do trem para que ocorra dentro de um quandrado
 // A coordenada (qx,qy) indica o vértice noroeste do quadrado
 // tamanhoQuadrado é o tamanho do lado do quadrado
 void Trem::checarLimitesQuadrado(int qx, int qy, int tamanhoQuadrado){
@@ -55,5 +64,8 @@ void Trem::checarLimitesQuadrado(int qx, int qy, int tamanhoQuadrado){
                 this->y-=1;
             emit updateGUI(this->ID, this->x, this->y);
             usleep(velocidade);
+    }else{
+            usleep(velocidade);
     }
+
 }

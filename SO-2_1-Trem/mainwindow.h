@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "trem.h"
+#include <string>
+#include <map>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,6 +17,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    //Verifica se a coordenada não está ocupada por um trem
+    bool podeMover(int x, int y);
 
 public slots:
     void updateInterface(int,int,int);
@@ -37,11 +42,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    Trem *trem1;
-    Trem *trem2;
-    Trem *trem3;
-    Trem *trem4;
-    Trem *trem5;
+    Trem* listaTrem[5];
 
 };
 #endif // MAINWINDOW_H

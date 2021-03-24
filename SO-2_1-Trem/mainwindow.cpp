@@ -7,17 +7,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    trem1 = new Trem(1,78,78);
-    trem2 = new Trem(2,323,78);
-    trem3 = new Trem(3,568,78);
-    trem4 = new Trem(4,202,322);
-    trem5 = new Trem(5,448,322);
+    listaTrem[0] = new Trem(0,78,78);
+    listaTrem[1] = new Trem(1,323,78);
+    listaTrem[2] = new Trem(2,568,78);
+    listaTrem[3] = new Trem(3,202,322);
+    listaTrem[4] = new Trem(4,448,322);
 
-    connect(trem1,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    connect(trem2,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    connect(trem3,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    connect(trem4,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
-    connect(trem5,SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
+    for(int i = 0; i<5; i++)
+        connect(listaTrem[i],SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
 
 }
 
@@ -26,22 +23,41 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+bool MainWindow::podeMover(int x, int y){
+    bool resultado = true;
+    for(int i = 0; i<5; i++){
+        int tremTam = listaTrem[i]->getTamanhoTrem();
+        int tremx = listaTrem[i]->getCoordenadas().first;
+        int tremy = listaTrem[i]->getCoordenadas().second;
+        if (x >= tremx && x <= tremx+tremTam)
+            return false;
+        if (y >= tremy && y <= tremy+tremTam)
+            return false;
+   }
+}
+
 void MainWindow::updateInterface(int id, int x, int y){
+    int tamanho = 50;
     switch(id){
+    case 0:
+        tamanho = listaTrem[0]->getTamanhoTrem();
+        ui->trem1->setGeometry(x,y,tamanho,tamanho);
+        break;
     case 1:
-        ui->trem1->setGeometry(x,y,50,50);
+        tamanho = listaTrem[1]->getTamanhoTrem();
+        ui->trem2->setGeometry(x,y,tamanho,tamanho);
         break;
     case 2:
-        ui->trem2->setGeometry(x,y,50,50);
+        tamanho = listaTrem[2]->getTamanhoTrem();
+        ui->trem3->setGeometry(x,y,tamanho,tamanho);
         break;
     case 3:
-        ui->trem3->setGeometry(x,y,50,50);
+        tamanho = listaTrem[3]->getTamanhoTrem();
+        ui->trem4->setGeometry(x,y,tamanho,tamanho);
         break;
     case 4:
-        ui->trem4->setGeometry(x,y,50,50);
-        break;
-    case 5:
-        ui->trem5->setGeometry(x,y,50,50);
+        tamanho = listaTrem[4]->getTamanhoTrem();
+        ui->trem5->setGeometry(x,y,tamanho,tamanho);
         break;
     default:
         break;
@@ -50,43 +66,37 @@ void MainWindow::updateInterface(int id, int x, int y){
 
 void MainWindow::on_btncomecar_clicked()
 {
-    trem1->start();
-    trem2->start();
-    trem3->start();
-    trem4->start();
-    trem5->start();
+    for(int i = 0; i<5; i++)
+        listaTrem[i]->start();
 }
 
 void MainWindow::on_btnparar_clicked()
 {
-    trem1->terminate();
-    trem2->terminate();
-    trem3->terminate();
-    trem4->terminate();
-    trem5->terminate();
+    for(int i = 0; i<5; i++)
+        listaTrem[i]->terminate();
 }
 
 void MainWindow::on_controle1_sliderReleased()
 {
-        trem1->setVelocidade(ui->controle1->value());
+        listaTrem[0]->setVelocidade(ui->controle1->value());
 }
 
 void MainWindow::on_controle2_sliderReleased()
 {
-        trem2->setVelocidade(ui->controle2->value());
+        listaTrem[1]->setVelocidade(ui->controle2->value());
 }
 
 void MainWindow::on_controle3_sliderReleased()
 {
-        trem3->setVelocidade(ui->controle3->value());
+        listaTrem[2]->setVelocidade(ui->controle3->value());
 }
 
 void MainWindow::on_controle4_sliderReleased()
 {
-        trem4->setVelocidade(ui->controle4->value());
+        listaTrem[3]->setVelocidade(ui->controle4->value());
 }
 
 void MainWindow::on_controle5_sliderReleased()
 {
-        trem5->setVelocidade(ui->controle5->value());
+        listaTrem[4]->setVelocidade(ui->controle5->value());
 }
