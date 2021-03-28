@@ -36,6 +36,8 @@ public:
     //Caso o trem esteja saindo de uma área crítica muda do estado da área para -1 e abre o mutex
     void liberarAreaCritica(int index, int ID);
 
+    void checarDeadlock(int index, int ID);
+
 private:
     Estado* estado;
 };

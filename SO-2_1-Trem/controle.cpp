@@ -85,8 +85,7 @@ void Controle::acessoAreaCritica(int index, int ID){
     if (this->estado->areaCriticaOcupada[index] == ID)
         return;
     else{
-        this->estado->travas[index].lock();
-        this->estado->areaCriticaOcupada[index] = ID;
+        this->checarDeadlock(index, ID);
     }
 }
 
@@ -96,4 +95,55 @@ void Controle::liberarAreaCritica(int index, int ID){
         this->estado->travas[index].unlock();
     }
 
+}
+
+void Controle::checarDeadlock(int index, int ID){
+    switch (index) {
+    case 0:
+        if (ID != 3){
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        }
+        break;
+    case 1:
+        if (ID != 4){
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        }
+        break;
+    case 2:
+        if (ID != 1){
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        }
+        break;
+    case 3:
+        if (ID != 1 && ID != 4){
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        }
+        break;
+    case 4:
+        if (ID != 2 && ID != 3){
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        }
+        break;
+    case 5:
+        if (ID != 1){
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        }
+        break;
+    case 6:
+        if (ID != 1){
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        }
+        break;
+    default:
+            this->estado->travas[index].lock();
+            this->estado->areaCriticaOcupada[index] = ID;
+        break;
+    }
 }
