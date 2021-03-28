@@ -81,7 +81,6 @@ void Controle::testeAreaCritica(int ID, Coordenada coordenada){
 
 }
 
-//Esse acesso pode ser feito de ID que está entrando ou já está em uma área crítica
 void Controle::acessoAreaCritica(int index, int ID){
     if (this->estado->areaCriticaOcupada[index] == ID)
         return;
@@ -91,7 +90,6 @@ void Controle::acessoAreaCritica(int index, int ID){
     }
 }
 
-//Essa liberação só é feita por uma thread que está saindo da área crítica, mas é preciso saber de ID está em index
 void Controle::liberarAreaCritica(int index, int ID){
     if (this->estado->areaCriticaOcupada[index] == ID){
         this->estado->areaCriticaOcupada[index] = -1;
