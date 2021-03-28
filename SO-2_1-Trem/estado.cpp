@@ -2,11 +2,6 @@
 
 Estado::Estado()
 {
-    areaCritica1 = -1;
-    areaCritica2 = -1;
-    areaCritica3 = -1;
-    areaCritica4 = -1;
-    areaCritica5 = -1;
-    areaCritica6 = -1;
-    areaCritica7 = -1;
+    for (unsigned long i = 0; i<this->areaCriticaOcupada.size(); i++)
+        this->areaCriticaOcupada[i] = -1;
 }

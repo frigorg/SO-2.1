@@ -29,47 +29,73 @@ bool Controle::colisaoTrem(int ID, Coordenada coordTremMovendo){
    return false;
 }
 
-bool Controle::colisaoNo(int blocoX, int blocoY, int tamBloco, int pontoX, int pontoY){
-    Coordenada c1;
-    c1.x = blocoX;
-    c1.y = blocoY;
-    Coordenada c2;
-    c2.x = pontoX;
-    c2.y = pontoY;
-    return this->colisaoNo(c1,tamBloco,c2);
+bool Controle::colisaoBlocos(int altura1, int comprimento1, Coordenada c1, int altura2, int comprimento2, Coordenada c2){
+    Bloco b1;
+    b1.altura = altura1;
+    b1.comprimento = comprimento1;
+    b1.vertice = c1;
+    Bloco b2;
+    b2.altura = altura2;
+    b2.comprimento = comprimento2;
+    b2.vertice = c2;
+    return this->colisaoBlocos(b1,b2);
 }
 
-bool Controle::colisaoNo(Coordenada cBloco, int tamBloco, Coordenada cPonto){
-    int tamMaximoTrem = estado->listaTrens[0].second;
+bool Controle::colisaoBlocos(Bloco bloco1, Bloco bloco2){
 
-    cPonto.x = cPonto.x - (tamMaximoTrem/2);
-    cPonto.y = cPonto.y - (tamMaximoTrem/2);
-
-    if (((cBloco.x >= cPonto.x) && (cBloco.x <= cPonto.x + tamMaximoTrem) &&
-        (cBloco.y >= cPonto.y) && (cBloco.y <= cPonto.y + tamMaximoTrem)) ||
-        ((cBloco.x + tamBloco >= cPonto.x) && (cBloco.x + tamBloco  <= cPonto.x + tamMaximoTrem) &&
-        (cBloco.y + tamBloco  >= cPonto.y) && (cBloco.y + tamBloco  <= cPonto.y + tamMaximoTrem)))
-        return true;
+    if (((bloco1.vertice.x >= bloco2.vertice.x && bloco1.vertice.x <= (bloco2.vertice.x + bloco2.comprimento)) &&
+       (bloco1.vertice.y >= bloco2.vertice.y && bloco1.vertice.y <= (bloco2.vertice.y + bloco2.altura))) ||
+       (((bloco1.vertice.x + bloco1.comprimento) >= bloco2.vertice.x && (bloco1.vertice.x + bloco1.comprimento) <= (bloco2.vertice.x + bloco2.comprimento)) &&
+       ((bloco1.vertice.y + bloco1.altura) >= bloco2.vertice.y && (bloco1.vertice.y + bloco1.altura) <= (bloco2.vertice.y + bloco2.altura))))
+           return true;
 
     return false;
-
 }
 
-int Controle::testeAreaCritica(int ID, int x, int y){
+void Controle::testeAreaCritica(int ID, int x, int y){
     Coordenada c;
     c.x = x;
     c.y = y;
     return this->testeAreaCritica(ID, c);
 }
 
-int Controle::testeAreaCritica(int ID, Coordenada coordenada){
+void Controle::testeAreaCritica(int ID, Coordenada coordenada){
 
-    for (unsigned long i = 0; i < this->estado->listaSegmentosTrilho.size(); i++){
-        Segmento s = estado->listaSegmentosTrilho[i].second;
-        if (this->colisaoNo(coordenada, estado->listaTrens[ID].second, s.p1))
-            return s.id;
-        if (this->colisaoNo(coordenada, estado->listaTrens[ID].second, s.p2))
-            return s.id;
+    std::array<int,7> areaCritica = {0,0,0,0,0,0,0};
+
+    for (unsigned long i = 0; i < this->estado->listaBlocosAreaCritica.size(); i++){
+        Bloco b = estado->listaBlocosAreaCritica[i];
+        Bloco t;
+        t.altura = estado->listaTrens[ID].second;
+        t.comprimento= estado->listaTrens[ID].second;
+        t.vertice = coordenada;
+        if(this->colisaoBlocos(t,b))
+            areaCritica[i] = 1;
     }
-    return -1;
+
+   for (int i=0; i<7; i++)
+       if (areaCritica[i])
+           this->acessoAreaCritica(i,ID);
+       else
+           this->liberarAreaCritica(i,ID);
+
+}
+
+//Esse acesso pode ser feito de ID que está entrando ou já está em uma área crítica
+void Controle::acessoAreaCritica(int index, int ID){
+    if (this->estado->areaCriticaOcupada[index] == ID)
+        return;
+    else{
+        this->estado->travas[index].lock();
+        this->estado->areaCriticaOcupada[index] = ID;
+    }
+}
+
+//Essa liberação só é feita por uma thread que está saindo da área crítica, mas é preciso saber de ID está em index
+void Controle::liberarAreaCritica(int index, int ID){
+    if (this->estado->areaCriticaOcupada[index] == ID){
+        this->estado->areaCriticaOcupada[index] = -1;
+        this->estado->travas[index].unlock();
+    }
+
 }

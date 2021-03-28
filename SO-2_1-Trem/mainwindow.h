@@ -20,9 +20,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    std::list<Segmento> listaSegmentosTrilho;
     std::deque<Trem*> listaTrens;
-    std::list<Coordenada> listaNos;
 
 public slots:
     void updateInterface(int,int,int);
@@ -49,8 +47,9 @@ private:
 
     float transformarValor(int entrada);
     void popularEstadoTrens();
-    void popularSegmentos();
+    void popularBlocosAreaCritica();
     void atualizarEstadoTrem(int index);
+    void verificarAreaCritica();
 };
 
 #endif // MAINWINDOW_H

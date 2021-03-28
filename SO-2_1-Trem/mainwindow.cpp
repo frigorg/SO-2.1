@@ -21,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
         connect(listaTrens[i],SIGNAL(updateGUI(int,int,int)),SLOT(updateInterface(int,int,int)));
 
     popularEstadoTrens();
-    popularSegmentos();
+    popularBlocosAreaCritica();
+    verificarAreaCritica();
 }
 
 MainWindow::~MainWindow()
@@ -118,65 +119,51 @@ void MainWindow::popularEstadoTrens(){
     }
 }
 
-void MainWindow::popularSegmentos(){
-    Segmento s;
+void MainWindow::popularBlocosAreaCritica(){
+    Bloco b;
     Coordenada c;
-    s.id = 1;
+    b.altura = 295;
+    b.comprimento = 50;
     c.x = 323;
     c.y = 78;
-    s.p1 = c;
-    c.x = 323;
-    c.y = 323;
-    s.p2 = c;
-    this->estado->listaSegmentosTrilho.push_back(std::pair<int, Segmento>(-1,s));
-    s.id = 2;
+    b.vertice = c;
+    this->estado->listaBlocosAreaCritica.push_back(b);
+    b.altura = 295;
+    b.comprimento = 50;
     c.x = 568;
     c.y = 78;
-    s.p1 = c;
-    c.x = 568;
-    c.y = 323;
-    s.p2 = c;
-    this->estado->listaSegmentosTrilho.push_back(std::pair<int, Segmento>(-1,s));
-    s.id = 3;
+    b.vertice = c;
+    this->estado->listaBlocosAreaCritica.push_back(b);
+    b.altura = 50;
+    b.comprimento = 171;
     c.x = 202;
     c.y = 323;
-    s.p1 = c;
+    b.vertice = c;
+    this->estado->listaBlocosAreaCritica.push_back(b);
+    b.altura = 50;
+    b.comprimento = 174;
     c.x = 323;
     c.y = 323;
-    s.p2 = c;
-    this->estado->listaSegmentosTrilho.push_back(std::pair<int, Segmento>(-1,s));
-    s.id = 4;
-    c.x = 323;
-    c.y = 323;
-    s.p1 = c;
+    b.vertice = c;
+    this->estado->listaBlocosAreaCritica.push_back(b);
+    b.altura = 50;
+    b.comprimento = 171;
     c.x = 447;
     c.y = 323;
-    s.p2 = c;
-    this->estado->listaSegmentosTrilho.push_back(std::pair<int, Segmento>(-1,s));
-    s.id = 5;
-    c.x = 447;
-    c.y = 323;
-    s.p1 = c;
+    b.vertice = c;
+    this->estado->listaBlocosAreaCritica.push_back(b);
+    b.altura = 50;
+    b.comprimento = 174;
     c.x = 568;
     c.y = 323;
-    s.p2 = c;
-    this->estado->listaSegmentosTrilho.push_back(std::pair<int, Segmento>(-1,s));
-    s.id = 6;
-    c.x = 568;
-    c.y = 323;
-    s.p1 = c;
-    c.x = 692;
-    c.y = 323;
-    s.p2 = c;
-    this->estado->listaSegmentosTrilho.push_back(std::pair<int, Segmento>(-1,s));
-    s.id = 7;
+    b.vertice = c;
+    this->estado->listaBlocosAreaCritica.push_back(b);
+    b.altura = 295;
+    b.comprimento = 50;
     c.x = 447;
     c.y = 323;
-    s.p1 = c;
-    c.x = 447;
-    c.y = 568;
-    s.p2 = c;
-    this->estado->listaSegmentosTrilho.push_back(std::pair<int, Segmento>(-1,s));
+    b.vertice = c;
+    this->estado->listaBlocosAreaCritica.push_back(b);
 }
 
 void MainWindow::atualizarEstadoTrem(int index){
@@ -184,3 +171,13 @@ void MainWindow::atualizarEstadoTrem(int index){
     this->estado->listaTrens[index].second = this->listaTrens[index]->getTamanho();
 }
 
+void MainWindow::verificarAreaCritica(){
+    this->estado->areaCriticaOcupada[0] = 1;
+    this->estado->areaCriticaOcupada[1] = 2;
+    this->estado->areaCriticaOcupada[2] = 3;
+    this->estado->areaCriticaOcupada[3] = 4;
+    this->estado->areaCriticaOcupada[4] = 4;
+    this->estado->areaCriticaOcupada[5] = -1;
+    this->estado->areaCriticaOcupada[6] = 4;
+
+}

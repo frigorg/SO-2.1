@@ -4,12 +4,11 @@
 #include "util.h"
 #include "estado.h"
 #include <QMutex>
+#include <array>
 
 class Controle
 {
 public:
-
-    QMutex mutex;
 
     Controle(Estado* estado);
 
@@ -19,18 +18,23 @@ public:
     bool colisaoTrem(int ID, int x, int y);
     bool colisaoTrem(int ID, Coordenada coordTremMovendo);
 
-    //Verifica se há uma colisão com um nó, considerando que o trilho tem um tamanho máximo de Trem::TAMANHO_MAXIMO
-    //blocoX e blocoY são as coordenadas do ponto para que se quer mover
-    //tamanhoBloco é a dimensão do trem que quer fazer o movimento
-    //PontoX e pontoY é o ponto central de um nó na malha ferroviária
-    bool colisaoNo(int blocoX, int blocoY, int tamBloco, int pontoX, int pontoY);
-    bool colisaoNo(Coordenada cBloco, int tamBloco, Coordenada c);
+    //Verifica se há colisão entre os dois blocos
+    //retorna true para sim e false pra não
+    bool colisaoBlocos(int altura1, int comprimento1, Coordenada c1, int altura2, int comprimento2, Coordenada c2);
+    bool colisaoBlocos(Bloco bloco1, Bloco bloco2);
 
-    //Testa se existe uma área crítica na coordenada
+    //Testa se existe uma área crítica na coordenada de parâmetro e escolhe entre acessar a área, liberar o acesso ou não fazer nada
     //ID é o identificador do trem que quer fazer o movimento
-    //Retorna o ID da área crítica ou -1 se não existe área na coordenada dada
-    int testeAreaCritica(int ID, int x, int y);
-    int testeAreaCritica(int ID, Coordenada coordenada);
+    void testeAreaCritica(int ID, int x, int y);
+    void testeAreaCritica(int ID, Coordenada coordenada);
+
+    //Caso o trem já esteja na área crítica, faz nada
+    //Caso o trem está entrado na área, muda o estado da área crítica para o ID do trem e fecha o mutex
+    void acessoAreaCritica(int index, int ID);
+
+    //Caso o trem não esteja em uma áera crítica, faz nada
+    //Caso o trem esteja saindo de uma área crítica muda do estado da área para -1 e abre o mutex
+    void liberarAreaCritica(int index, int ID);
 
 private:
     Estado* estado;

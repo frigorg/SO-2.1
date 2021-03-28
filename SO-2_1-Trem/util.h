@@ -6,10 +6,10 @@ struct Coordenada {
     int y;
 };
 
-struct Segmento {
-    int id;
-    Coordenada p1;
-    Coordenada p2;
+struct Bloco{
+    Coordenada vertice;
+    int altura;
+    int comprimento;
 };
 
 enum Direcao {
