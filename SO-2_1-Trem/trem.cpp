@@ -4,44 +4,54 @@
 #include <math.h>
 
 //Construtor
-Trem::Trem(int ID, int x, int y){
+Trem::Trem(int ID, int x, int y, Direcao direcao, float velocidade, Controle* controle){
     this->ID = ID;
     this->x = x;
     this->y = y;
-    velocidade = 4000;
+    this->direcao = direcao;
+    this->velocidade = velocidade;
+    this->controle = controle;
 }
 
 void Trem::setVelocidade(int valor){
-   //this->velocidade = pow(10, valor/1351.727641516); //inverso da log
-   this->velocidade = pow((valor+1)/70.710678119,2); //inverso da raiz
-   //this->velocidade = valor; //linear
+   this->velocidade = valor;
 }
 
-int Trem::getTamanhoTrem() {
+int Trem::getTamanho() {
     return this->TAMANHO_TREM;
 }
 
-std::pair<int,int> Trem::getCoordenadas(){
-    return std::pair<int,int>(this->x, this->y);
+void Trem::setDirecao(Direcao direcao) {
+    this->direcao = direcao;
 }
 
+Coordenada Trem::getCoordenadas(){
+    Coordenada coordenada;
+    coordenada.x = this->x;
+    coordenada.y = this->y;
+    return coordenada;
+}
+
+//Inicia a thread
 void Trem::run(){
     while(true){
-        switch(ID){
-        case 0:     //Trem 0
-            checarLimitesQuadrado(78, 78, TAMANHO_QUADRADO);
+
+        switch(this->direcao){
+        case Direcao::NORTE:
+            this->movimentoHorario(this->x,this->y-1);
+            this->fimDoMovimento();
             break;
-        case 1:     //Trem 1
-            checarLimitesQuadrado(323, 78, TAMANHO_QUADRADO);
+        case Direcao::LESTE:
+            this->movimentoHorario(this->x+1,this->y);
+            this->fimDoMovimento();
             break;
-        case 2:     //Trem 2
-            checarLimitesQuadrado(568, 78, TAMANHO_QUADRADO);
+        case Direcao::SUL:
+            this->movimentoHorario(this->x,this->y+1);
+            this->fimDoMovimento();
             break;
-        case 3:     //Trem 3
-            checarLimitesQuadrado(202, 322, TAMANHO_QUADRADO);
-            break;
-        case 4:     //Trem 4
-            checarLimitesQuadrado(448, 322, TAMANHO_QUADRADO);
+        case Direcao::OESTE:
+            this->movimentoHorario(this->x-1,this->y);
+            this->fimDoMovimento();
             break;
         default:
             break;
@@ -49,23 +59,98 @@ void Trem::run(){
     }
 }
 
-// Calcula o movimento do trem para que ocorra dentro de um quandrado
-// A coordenada (qx,qy) indica o vértice noroeste do quadrado
-// tamanhoQuadrado é o tamanho do lado do quadrado
-void Trem::checarLimitesQuadrado(int qx, int qy, int tamanhoQuadrado){
-    if (this->velocidade < VELOCIDADE_MINIMA){
-            if (this->y == qy && this->x < (qx + tamanhoQuadrado))
-                this->x+=1;
-            else if (this->x == (qx + tamanhoQuadrado) && this->y < (qy + tamanhoQuadrado))
-                this->y+=1;
-            else if (this->x > qx && y == (qy + tamanhoQuadrado))
-                this->x-=1;
-            else if (this->y > qy && this->x == qx)
-                this->y-=1;
-            emit updateGUI(this->ID, this->x, this->y);
-            usleep(velocidade);
-    }else{
-            usleep(velocidade);
+//Sempre que encontrar um nó no trilho irá seguir o sentido horário
+//Se encontrar outro trem, irá parar
+void Trem::movimentoHorario(int x, int y){
+
+    if (this->velocidade >= Trem::VELOCIDADE_MINIMA)
+        return;
+
+    if(this->controle->colisaoTrem(this->ID,x,y))
+        return;
+
+
+    switch(this->ID){
+    case 0:
+        if (x == 78 && y == 78 ){
+            this->direcao = Direcao::LESTE;
+        }
+        if (x == 323 && y == 78 ){
+            this->direcao = Direcao::SUL;
+        }
+        if (x == 323 && y == 323){
+            this->direcao = Direcao::OESTE;
+        }
+        if (x == 78 && y == 323){
+            this->direcao = Direcao::NORTE;
+        }
+        break;
+    case 1:
+        if (x == 323 && y == 78 ){
+            this->direcao = Direcao::LESTE;
+        }
+        if (x == 568 && y == 78 ){
+            this->direcao = Direcao::SUL;
+        }
+        if (x == 568 && y == 323){
+            this->direcao = Direcao::OESTE;
+        }
+        if (x == 323 && y == 323){
+            this->direcao = Direcao::NORTE;
+        }
+        break;
+    case 2:
+        if (x == 568 && y == 78){
+            this->direcao = Direcao::LESTE;
+        }
+        if (x == 813 && y == 78 ){
+            this->direcao = Direcao::SUL;
+        }
+        if (x == 813 && y == 323){
+            this->direcao = Direcao::OESTE;
+        }
+        if (x == 568 && y == 323){
+            this->direcao = Direcao::NORTE;
+        }
+        break;
+    case 3:
+        if (x == 202 && y == 323 ){
+            this->direcao = Direcao::LESTE;
+        }
+        if (x == 447 && y == 323 ){
+            this->direcao = Direcao::SUL;
+        }
+        if (x == 447 && y == 568){
+            this->direcao = Direcao::OESTE;
+        }
+        if (x == 202 && y == 568){
+            this->direcao = Direcao::NORTE;
+        }
+        break;
+    case 4:
+        if (x == 447 && y == 323 ){
+            this->direcao = Direcao::LESTE;
+        }
+        if (x == 692 && y == 323 ){
+            this->direcao = Direcao::SUL;
+        }
+        if (x == 692 && y == 568){
+            this->direcao = Direcao::OESTE;
+        }
+        if (x == 447 && y == 568){
+            this->direcao = Direcao::NORTE;
+        }
+        break;
+    default:
+        break;
     }
 
+    this->x = x;
+    this->y = y;
+}
+
+//Emite a mensagem para atualizar a tela e espera.
+void Trem::fimDoMovimento(){
+    emit updateGUI(this->ID, this->x, this->y);
+    usleep(velocidade);
 }

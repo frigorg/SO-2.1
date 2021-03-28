@@ -2,29 +2,38 @@
 #define TREM_H
 
 #include <QThread>
+#include "util.h"
+#include "controle.h"
 
 class Trem: public QThread{
  Q_OBJECT
 public:
-    Trem(int,int,int);
+    static const int TAMANHO_MAXIMO = 50;
+    static const int VELOCIDADE_MINIMA = 5000;
+
+    Trem(int,int,int,Direcao,float,Controle*);
     void run();
     void setVelocidade(int valor);
-    int getTamanhoTrem();
-    std::pair<int,int> getCoordenadas();
+    int getTamanho();
+    Coordenada getCoordenadas();
+    void setDirecao(Direcao direcao);
+
 
 signals:
     void updateGUI(int,int,int);
 
 private:
-   int ID;
-   int x;
-   int y;
-   float velocidade;
-   int const TAMANHO_QUADRADO = 245;
-   int const VELOCIDADE_MINIMA = 5000;
-   int const TAMANHO_TREM = 50;
+    int ID;
+    int x;
+    int y;
+    float velocidade;
+    Direcao direcao;
+    int const TAMANHO_TREM = 50;
+    Controle* controle;
 
-   void checarLimitesQuadrado(int qx, int qy, int tamanhoQuadrado);
+    void movimentoHorario(int x, int y);
+
+    void fimDoMovimento();
 };
 
 #endif // TREM_H

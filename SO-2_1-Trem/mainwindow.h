@@ -3,8 +3,10 @@
 
 #include <QMainWindow>
 #include "trem.h"
-#include <string>
-#include <map>
+#include "estado.h"
+#include <math.h>
+#include <deque>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,8 +20,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //Verifica se a coordenada não está ocupada por um trem
-    bool podeMover(int x, int y);
+    std::list<Segmento> listaSegmentosTrilho;
+    std::deque<Trem*> listaTrens;
+    std::list<Coordenada> listaNos;
 
 public slots:
     void updateInterface(int,int,int);
@@ -42,7 +45,12 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    Trem* listaTrem[5];
+    Estado* estado;
 
+    float transformarValor(int entrada);
+    void popularEstadoTrens();
+    void popularSegmentos();
+    void atualizarEstadoTrem(int index);
 };
+
 #endif // MAINWINDOW_H
