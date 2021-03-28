@@ -46,8 +46,8 @@
    <widget class="QFrame" name="trilho1">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>100</y>
+      <x>85</x>
+      <y>85</y>
       <width>250</width>
       <height>250</height>
      </rect>
@@ -68,8 +68,8 @@
    <widget class="QFrame" name="trilho2">
     <property name="geometry">
      <rect>
-      <x>345</x>
-      <y>100</y>
+      <x>330</x>
+      <y>85</y>
       <width>250</width>
       <height>250</height>
      </rect>
@@ -90,8 +90,8 @@
    <widget class="QFrame" name="trilho3">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>100</y>
+      <x>575</x>
+      <y>85</y>
       <width>250</width>
       <height>250</height>
      </rect>
@@ -112,8 +112,8 @@
    <widget class="QFrame" name="trilho4">
     <property name="geometry">
      <rect>
-      <x>225</x>
-      <y>345</y>
+      <x>210</x>
+      <y>330</y>
       <width>250</width>
       <height>250</height>
      </rect>
@@ -134,8 +134,8 @@
    <widget class="QFrame" name="trilho5">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>345</y>
+      <x>455</x>
+      <y>330</y>
       <width>250</width>
       <height>250</height>
      </rect>
@@ -2529,8 +2529,8 @@
      <rect>
       <x>78</x>
       <y>200</y>
-      <width>50</width>
-      <height>50</height>
+      <width>20</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2548,8 +2548,8 @@
      <rect>
       <x>812</x>
       <y>200</y>
-      <width>50</width>
-      <height>50</height>
+      <width>20</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2567,8 +2567,8 @@
      <rect>
       <x>320</x>
       <y>568</y>
-      <width>50</width>
-      <height>50</height>
+      <width>20</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2586,8 +2586,8 @@
      <rect>
       <x>570</x>
       <y>568</y>
-      <width>50</width>
-      <height>50</height>
+      <width>20</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -2605,8 +2605,8 @@
      <rect>
       <x>447</x>
       <y>78</y>
-      <width>50</width>
-      <height>50</height>
+      <width>20</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">

@@ -28,7 +28,7 @@ private:
     int y;
     float velocidade;
     Direcao direcao;
-    int const TAMANHO_TREM = 50;
+    int const TAMANHO_TREM = 20;
     Controle* controle;
 
     void movimentoHorario(int x, int y);
