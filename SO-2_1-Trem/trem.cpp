@@ -63,7 +63,8 @@ void Trem::run(){
 //Se encontrar outro trem, irá parar
 void Trem::movimentoHorario(int x, int y){
 
-    this->controle->testeAreaCritica(this->ID,x,y);
+    if (this->controle->testeAreaCritica(this->ID,x,y) == -1)
+        return;
 
     if (this->velocidade >= Trem::VELOCIDADE_MINIMA)
         return;

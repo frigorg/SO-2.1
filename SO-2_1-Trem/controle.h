@@ -25,8 +25,8 @@ public:
 
     //Testa se existe uma área crítica na coordenada de parâmetro e escolhe entre acessar a área, liberar o acesso ou não fazer nada
     //ID é o identificador do trem que quer fazer o movimento
-    void testeAreaCritica(int ID, int x, int y);
-    void testeAreaCritica(int ID, Coordenada coordenada);
+    int testeAreaCritica(int ID, int x, int y);
+    int testeAreaCritica(int ID, Coordenada coordenada);
 
     //Caso o trem já esteja na área crítica, faz nada
     //Caso o trem está entrado na área, muda o estado da área crítica para o ID do trem e fecha o mutex
@@ -36,7 +36,7 @@ public:
     //Caso o trem esteja saindo de uma área crítica muda do estado da área para -1 e abre o mutex
     void liberarAreaCritica(int index, int ID);
 
-    void checarDeadlock(int index, int ID);
+    bool checarDeadlock(int indexArea, int ID);
 
 private:
     Estado* estado;

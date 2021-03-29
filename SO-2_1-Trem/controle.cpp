@@ -52,14 +52,14 @@ bool Controle::colisaoBlocos(Bloco bloco1, Bloco bloco2){
     return false;
 }
 
-void Controle::testeAreaCritica(int ID, int x, int y){
+int Controle::testeAreaCritica(int ID, int x, int y){
     Coordenada c;
     c.x = x;
     c.y = y;
     return this->testeAreaCritica(ID, c);
 }
 
-void Controle::testeAreaCritica(int ID, Coordenada coordenada){
+int Controle::testeAreaCritica(int ID, Coordenada coordenada){
 
     std::array<int,7> areaCritica = {0,0,0,0,0,0,0};
 
@@ -74,19 +74,49 @@ void Controle::testeAreaCritica(int ID, Coordenada coordenada){
     }
 
    for (int i=0; i<7; i++)
-       if (areaCritica[i])
+       if (areaCritica[i]){
+           if (this->estado->areaCriticaOcupada[i] == ID)
+               continue;
+
+           if (checarDeadlock(i,ID))
+               return -1;
+
            this->acessoAreaCritica(i,ID);
-       else
+
+       } else
            this->liberarAreaCritica(i,ID);
 
+   return 0;
 }
 
 void Controle::acessoAreaCritica(int index, int ID){
-    if (this->estado->areaCriticaOcupada[index] == ID)
-        return;
-    else{
-        this->checarDeadlock(index, ID);
+    //Switch para casos que o trem não trava a área que irá passar
+    switch (ID) {
+    case 0:
+        if (index == 3)
+            return;
+        break;
+    case 1:
+        if (index == 2 || index == 5 || index == 6)
+            return;
+        break;
+    case 2:
+        if (index == 4)
+            return;
+        break;
+    case 3:
+        if (index == 0 || index == 4)
+            return;
+        break;
+    case 4:
+        if (index == 1 || index == 3)
+            return;
+        break;
+    default:
+        break;
     }
+    this->estado->travas[index].lock();
+    this->estado->areaCriticaOcupada[index] = ID;
 }
 
 void Controle::liberarAreaCritica(int index, int ID){
@@ -97,53 +127,118 @@ void Controle::liberarAreaCritica(int index, int ID){
 
 }
 
-void Controle::checarDeadlock(int index, int ID){
-    switch (index) {
+//Checagem que se faz antes de um trem entrar em uma área livre
+bool Controle::checarDeadlock(int indexArea, int ID){
+    switch (indexArea) {
     case 0:
-        if (ID != 3){
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
+        if (ID == 0){
+            if ((estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[3] == 1))
+                return true;
         }
-        break;
-    case 1:
-        if (ID != 4){
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
+        if (ID == 0){
+            if ((estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[4] == 1) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
         }
         break;
     case 2:
-        if (ID != 1){
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
+        if (ID == 3){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[3] == 1))
+                return true;
+        }
+        if (ID == 3){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[4] == 1) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
         }
         break;
     case 3:
-        if (ID != 1 && ID != 4){
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[2] == 3))
+                return true;
+        }
+        if (ID == 3){
+            if ((estado->areaCriticaOcupada[4] == 1) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
+        }
+        if (ID == 3){
+            if ((estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[6] == 4) &&
+                (estado->areaCriticaOcupada[5] == 2))
+                return true;
+        }
+        break;
+    case 1:
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[4] == 4) &&
+                (estado->areaCriticaOcupada[5] == 2))
+                return true;
+        }
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[6] == 4) &&
+                (estado->areaCriticaOcupada[5] == 2) &&
+                (estado->areaCriticaOcupada[3] == 3))
+                return true;
         }
         break;
     case 4:
-        if (ID != 2 && ID != 3){
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
+        if (ID == 4){
+            if ((estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[5] == 2))
+                return true;
+        }
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[3] == 3) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
+        }
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
         }
         break;
     case 5:
-        if (ID != 1){
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
+        if (ID == 2){
+            if ((estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[4] == 4))
+                return true;
+        }
+        if (ID == 2){
+            if ((estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[3] == 3) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
         }
         break;
     case 6:
-        if (ID != 1){
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
+        if (ID == 4){
+            if ((estado->areaCriticaOcupada[4] == 1) &&
+                (estado->areaCriticaOcupada[3] == 3))
+                return true;
+        }
+        if (ID == 4){
+            if ((estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[3] == 3) &&
+                (estado->areaCriticaOcupada[5] == 2))
+                return true;
+        }
+        if (ID == 4){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[4] == 1))
+                return true;
         }
         break;
     default:
-            this->estado->travas[index].lock();
-            this->estado->areaCriticaOcupada[index] = ID;
         break;
     }
+    return false;
 }

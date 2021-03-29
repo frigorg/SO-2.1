@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     Controle* controle = new Controle(this->estado);
 
-    this->listaTrens.push_back(new Trem(0,78,200,Direcao::NORTE,4000.00,controle));
+    this->listaTrens.push_back(new Trem(0,78,200,Direcao::NORTE,9000.00,controle));
     this->listaTrens.push_back(new Trem(1,447,78,Direcao::LESTE,4000.00,controle));
-    this->listaTrens.push_back(new Trem(2,813,200,Direcao::SUL,4000.00,controle));
-    this->listaTrens.push_back(new Trem(3,320,568,Direcao::OESTE,9000.00,controle));
+    this->listaTrens.push_back(new Trem(2,813,200,Direcao::SUL,9000.00,controle));
+    this->listaTrens.push_back(new Trem(3,320,568,Direcao::OESTE,4000.00,controle));
     this->listaTrens.push_back(new Trem(4,570,568,Direcao::OESTE,4000.00,controle));
 
     for (int i = 0; i < 5; i++)
@@ -122,42 +122,49 @@ void MainWindow::popularEstadoTrens(){
 void MainWindow::popularBlocosAreaCritica(){
     Bloco b;
     Coordenada c;
+    //0
     b.altura = 265;
     b.comprimento = 24;
     c.x = 321;
     c.y = 78;
     b.vertice = c;
     this->estado->listaBlocosAreaCritica.push_back(b);
+    //1
     b.altura = 265;
     b.comprimento = 24;
     c.x = 566;
     c.y = 78;
     b.vertice = c;
     this->estado->listaBlocosAreaCritica.push_back(b);
+    //2
     b.altura = 24;
     b.comprimento = 145;
     c.x = 200;
     c.y = 321;
     b.vertice = c;
     this->estado->listaBlocosAreaCritica.push_back(b);
+    //3
     b.altura = 24;
     b.comprimento = 148;
     c.x = 321;
     c.y = 321;
     b.vertice = c;
     this->estado->listaBlocosAreaCritica.push_back(b);
+    //4
     b.altura = 24;
     b.comprimento = 145;
     c.x = 445;
     c.y = 321;
     b.vertice = c;
     this->estado->listaBlocosAreaCritica.push_back(b);
+    //5
     b.altura = 24;
     b.comprimento = 148;
     c.x = 566;
     c.y = 321;
     b.vertice = c;
     this->estado->listaBlocosAreaCritica.push_back(b);
+    //6
     b.altura = 265;
     b.comprimento = 24;
     c.x = 445;
