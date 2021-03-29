@@ -142,6 +142,33 @@ bool Controle::checarDeadlock(int indexArea, int ID){
                 (estado->areaCriticaOcupada[6] == 4))
                 return true;
         }
+        if (ID == 0){
+            if ((estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[5] == 2) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
+        }
+        break;
+    case 1:
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[4] == 4) &&
+                (estado->areaCriticaOcupada[5] == 2))
+                return true;
+        }
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[6] == 4) &&
+                (estado->areaCriticaOcupada[5] == 2) &&
+                (estado->areaCriticaOcupada[3] == 3))
+                return true;
+        }
+        if (ID == 1){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[5] == 2) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
+        }
         break;
     case 2:
         if (ID == 3){
@@ -152,6 +179,13 @@ bool Controle::checarDeadlock(int indexArea, int ID){
         if (ID == 3){
             if ((estado->areaCriticaOcupada[0] == 0) &&
                 (estado->areaCriticaOcupada[4] == 1) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
+        }
+        if (ID == 3){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[5] == 2) &&
                 (estado->areaCriticaOcupada[6] == 4))
                 return true;
         }
@@ -171,19 +205,6 @@ bool Controle::checarDeadlock(int indexArea, int ID){
             if ((estado->areaCriticaOcupada[1] == 1) &&
                 (estado->areaCriticaOcupada[6] == 4) &&
                 (estado->areaCriticaOcupada[5] == 2))
-                return true;
-        }
-        break;
-    case 1:
-        if (ID == 1){
-            if ((estado->areaCriticaOcupada[4] == 4) &&
-                (estado->areaCriticaOcupada[5] == 2))
-                return true;
-        }
-        if (ID == 1){
-            if ((estado->areaCriticaOcupada[6] == 4) &&
-                (estado->areaCriticaOcupada[5] == 2) &&
-                (estado->areaCriticaOcupada[3] == 3))
                 return true;
         }
         break;
@@ -217,6 +238,13 @@ bool Controle::checarDeadlock(int indexArea, int ID){
                 (estado->areaCriticaOcupada[6] == 4))
                 return true;
         }
+        if (ID == 2){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[6] == 4))
+                return true;
+        }
         break;
     case 6:
         if (ID == 4){
@@ -234,6 +262,13 @@ bool Controle::checarDeadlock(int indexArea, int ID){
             if ((estado->areaCriticaOcupada[0] == 0) &&
                 (estado->areaCriticaOcupada[2] == 3) &&
                 (estado->areaCriticaOcupada[4] == 1))
+                return true;
+        }
+        if (ID == 4){
+            if ((estado->areaCriticaOcupada[0] == 0) &&
+                (estado->areaCriticaOcupada[1] == 1) &&
+                (estado->areaCriticaOcupada[2] == 3) &&
+                (estado->areaCriticaOcupada[5] == 2))
                 return true;
         }
         break;

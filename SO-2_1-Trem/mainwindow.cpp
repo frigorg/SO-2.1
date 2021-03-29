@@ -11,9 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     Controle* controle = new Controle(this->estado);
 
-    this->listaTrens.push_back(new Trem(0,78,200,Direcao::NORTE,9000.00,controle));
+    this->listaTrens.push_back(new Trem(0,78,200,Direcao::NORTE,4000.00,controle));
     this->listaTrens.push_back(new Trem(1,447,78,Direcao::LESTE,4000.00,controle));
-    this->listaTrens.push_back(new Trem(2,813,200,Direcao::SUL,9000.00,controle));
+    this->listaTrens.push_back(new Trem(2,813,200,Direcao::SUL,4000.00,controle));
     this->listaTrens.push_back(new Trem(3,320,568,Direcao::OESTE,4000.00,controle));
     this->listaTrens.push_back(new Trem(4,570,568,Direcao::OESTE,4000.00,controle));
 
